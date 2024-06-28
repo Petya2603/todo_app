@@ -19,26 +19,24 @@ class _nameState extends State<add_comp> {
       time: "12:00 13:00",
       title: "Go to party",
       description: "Attend to part",
-      isCompleted: false,
+      isCompleted: false, 
+       date: '',
     ),
     Task(
       time: "12:00 13:00",
       title: "Go to party",
       description: "Attend to part",
       isCompleted: false,
+       date: '',
     ),
     Task(
       time: "12:00 13:00",
       title: "Run 5k",
       description: "Run 5 kilometers",
       isCompleted: false,
+       date: '',
     ),
-    Task(
-      time: "12:00 13:00",
-      title: "Run 5k",
-      description: "Run 5 kilometers",
-      isCompleted: false,
-    ),
+
   ];
 
   @override

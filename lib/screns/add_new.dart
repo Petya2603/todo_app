@@ -247,6 +247,14 @@ class _Add_newState extends State<Add_new> {
                     backgroundColor: const Color.fromARGB(255, 73, 41, 136),
                   ),
                   onPressed: () async {
+                    Task newTask = Task(
+                      title: titleController.text,
+                      description: descriptionController.text,
+                      isCompleted: false,
+                      date: dateController.text,
+                      time: timeController.text,
+                    );
+                    widget.addNewTask(newTask);
                     Navigator.pop(context);
                   },
                   child: const Padding(

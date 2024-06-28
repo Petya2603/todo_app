@@ -5,7 +5,7 @@ class Task {
     required this.time,
     required this.title,
     required this.description,
-    required this.isCompleted,
+    required this.isCompleted, required String date,
   });
   final String time;
   final String title;

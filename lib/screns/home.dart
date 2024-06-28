@@ -14,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? title;
   String? date;
   String? time;
   String? description;
@@ -25,13 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
       time: "12:00-13:00",
       title: "Study Lessons",
       description: "Study COMP117",
-      isCompleted: false,
+      isCompleted: false, 
+      date: '',
     ),
     Task(
       time: "11:00-13:40",
       title: "Go to party",
       description: "Attend to part",
       isCompleted: false,
+      date: '',
     ),
   ];
 
