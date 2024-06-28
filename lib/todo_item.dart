@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screns/add_compl.dart';
 
 class Todoitem extends StatefulWidget {
   const Todoitem({super.key, required this.task});
   final Task task;
-
   @override
   State<Todoitem> createState() => _TodoitemState();
 }

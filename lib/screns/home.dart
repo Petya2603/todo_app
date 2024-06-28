@@ -1,16 +1,10 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:one_clock/one_clock.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screns/add_compl.dart';
 import 'package:todo_app/screns/add_new.dart';
 import 'package:todo_app/todo_item.dart';
-import 'dart:convert';
-
-void _displayTask(String jsonString) {
-  json.decode(jsonString);
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,29 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
       isCompleted: false,
     ),
   ];
-  void _barlag() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? taskJson = prefs.getString("task");
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    _barlag();
-    super.initState();
-  }
-
-  void _saveTask(Task newTask) async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      todo.add(newTask);
-    });
-    String taskJson = newTask.toJson();
-    await prefs.setString("task", taskJson);
-    setState(() {
-      todo.add(newTask);
-    });
-  }
 
   void addNewTask(Task newTask) {
     setState(() {
@@ -77,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("lib/images/header2.jpg"),
+              image: AssetImage("assets/header2.jpg"),
               fit: BoxFit.cover,
             ),
           ),

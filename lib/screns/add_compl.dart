@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:one_clock/one_clock.dart';
-
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/todo_item.dart';
 
@@ -49,7 +48,7 @@ class _nameState extends State<add_comp> {
         body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("lib/images/header2.jpg"),
+                image: AssetImage("assets/header1.jpg"),
                 fit: BoxFit.cover,
               ),
             ),

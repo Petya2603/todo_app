@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/assets/constants/tasktype.dart';
+import 'package:todo_app/constants/tasktype.dart';
 import 'package:todo_app/model/task.dart';
 
+// ignore: camel_case_types
 class Add_new extends StatefulWidget {
   const Add_new({super.key, required this.addNewTask});
   final void Function(Task newTask) addNewTask;
-
   @override
   State<Add_new> createState() => _Add_newState();
 }
 
+// ignore: camel_case_types
 class _Add_newState extends State<Add_new> {
   TextEditingController titleController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -18,36 +18,6 @@ class _Add_newState extends State<Add_new> {
   TextEditingController descriptionController = TextEditingController();
   Tasktype taskType = Tasktype.note;
 
-  void _saveTask() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("title", titleController.text);
-    prefs.setString("time", timeController.text);
-    prefs.setString("description", descriptionController.text);
-    final Task newTask = Task(
-      title: titleController.text,
-      time: timeController.text,
-      description: descriptionController.text,
-      isCompleted: false,
-    );
-    String taskJson = newTask.toJson();
-    await prefs.setString("task", taskJson);
-    widget.addNewTask(newTask);
-    setState(() {});
-    print('Görev başarıyla kaydedildi: $taskJson');
-  }
-
-  void barla() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? title = prefs.getString("title");
-    final String? time = prefs.getString("time");
-    print("$title");
-    print("$time");
-  }
-  @override
-  void initState() {
-    barla();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -63,7 +33,7 @@ class _Add_newState extends State<Add_new> {
                 height: deviceHeight / 9,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("lib/images/header2.jpg"),
+                    image: AssetImage("assets/header2.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -277,7 +247,6 @@ class _Add_newState extends State<Add_new> {
                     backgroundColor: const Color.fromARGB(255, 73, 41, 136),
                   ),
                   onPressed: () async {
-                    _saveTask();
                     Navigator.pop(context);
                   },
                   child: const Padding(
