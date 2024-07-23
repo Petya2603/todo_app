@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todo_app/screns/home.dart';
 
 void main() {
@@ -18,9 +19,15 @@ class _Todo_ListState extends State<Todo_List> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    const statusBarColor = Color.fromARGB(255, 74, 26, 172);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+            statusBarColor: statusBarColor), // Set the status bar color
+        child: HomeScreen(), // Your main app screen
+      ),
     );
   }
 }

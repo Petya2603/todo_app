@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:one_clock/one_clock.dart';
 import 'package:todo_app/model/task.dart';
-import 'package:todo_app/screns/add_compl.dart';
+import 'package:todo_app/screns/CompletedTasksScreen.dart'; // Yeni ekran için import
 import 'package:todo_app/screns/add_new.dart';
 import 'package:todo_app/todo_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,28 +21,36 @@ class _HomeScreenState extends State<HomeScreen> {
   String? time;
   String? description;
   bool isChecked = false;
+  List<Task> todo = [];
 
-  List<Task> todo = [
-    Task(
-      time: "12:00-13:00",
-      title: "Study Lessons",
-      description: "Study COMP117",
-      isCompleted: false, 
-      date: '',
-    ),
-    Task(
-      time: "11:00-13:40",
-      title: "Go to party",
-      description: "Attend to part",
-      isCompleted: false,
-      date: '',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks(); // Uygulama açıldığında görevleri yükle
+  }
 
-  void addNewTask(Task newTask) {
+  void addNewTask(Task newTask) async {
     setState(() {
       todo.add(newTask);
     });
+    _saveTasks(); // Yeni görevi kaydet
+  }
+
+  Future<void> _loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final taskJson = prefs.getString('tasks');
+    if (taskJson != null) {
+      final List<dynamic> tasksList = jsonDecode(taskJson);
+      setState(() {
+        todo = tasksList.map((task) => Task.fromJson(task)).toList();
+      });
+    }
+  }
+
+  Future<void> _saveTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final taskJson = jsonEncode(todo.map((task) => task.toJson()).toList());
+    await prefs.setString('tasks', taskJson);
   }
 
   @override
@@ -91,11 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).push(
+                        // Tamamlanan görevleri filtrele
+                        List<Task> completedTasks =
+                            todo.where((task) => task.isCompleted).toList();
+
+                        // CompletedTasksScreen'e yönlendir
+                        Navigator.push(
+                          context,
                           MaterialPageRoute(
-                            builder: (contex) => add_comp(
-                              addNewTask: (newTask) => addNewTask(newTask),
-                            ),
+                            builder: (context) => CompletedTasksScreen(
+                                completedTasks: completedTasks),
                           ),
                         );
                       },
@@ -108,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -121,116 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 135, 95, 245),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: 50,
-                              height: 50,
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Mon",
-                                  style: TextStyle(
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 135, 95, 245),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: 50,
-                              height: 50,
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Sun",
-                                  style: TextStyle(
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 135, 95, 245),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: 50,
-                              height: 50,
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Tue",
-                                  style: TextStyle(
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 135, 95, 245),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: 50,
-                              height: 50,
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Wed",
-                                  style: TextStyle(
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 135, 95, 245),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              width: 50,
-                              height: 50,
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Fre",
-                                  style: TextStyle(
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         const Padding(
                           padding: EdgeInsets.only(top: 20),
                           child: Align(
@@ -244,24 +149,66 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: SingleChildScrollView(
-                            child: ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount: todo.length,
-                              itemBuilder: (context, index) {
-                                return (Todoitem(task: todo[index]));
-                              },
-                            ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Visibility(
+                                  visible: todo.isEmpty,
+                                  child: Lottie.asset('assets/1.json'),
+                                ),
+                              ),
+                              todo.isEmpty
+                                  ? const Text(
+                                      'Your task list is empty',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black45,
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: SingleChildScrollView(
+                                        child: ListView.builder(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount: todo.length,
+                                          itemBuilder: (context, index) {
+                                            return Todoitem(
+                                              task: todo[index],
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  todo[index] = value;
+                                                  _saveTasks();
+                                                });
+                                              },
+                                              onCheckBoxChanged: (value) {
+                                                setState(() {
+                                                  todo[index].isCompleted =
+                                                      value;
+                                                });
+                                                _saveTasks();
+                                              },
+                                              onDeleteItem: () {
+                                                setState(() {
+                                                  todo.removeAt(index);
+                                                });
+                                                _saveTasks();
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      // Mevcut kodunuz
+                                    ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ), // Expanded(
+              ),
             ],
           ),
         ),

@@ -39,6 +39,7 @@ dependencies:
   hexcolor: ^3.0.1
   one_clock: ^2.0.1
   flutter_launcher_icons: ^0.13.1
+  lottie: ^3.1.2
  
 dev_dependencies: 
   flutter_lints: ^4.0.0
@@ -47,7 +48,7 @@ dev_dependencies:
 
 
 flutter_launcher_icons:
-  image_path: "assets/5.png" 
+  image_path: "assets/logo.png" 
   android: true
   ios: true
   remove_alpha_ios: true
@@ -91,6 +92,10 @@ flutter:
       fonts:
         - asset: lib/fonts/Roboto-Italic.ttf
           style: italic
+    - family: Gilroy
+      fonts:
+        - asset: lib/fonts/Gilroy-Bold.ttf
+        - asset: lib/fonts/Gilroy-Medium.ttf        
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
