@@ -3,6 +3,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/model/task.dart';
 
 class CompletedTasksScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class CompletedTasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -121,7 +123,7 @@ class CompletedTasksScreen extends StatelessWidget {
                                                     color: Colors.grey,
                                                   ),
                                                 ),
-                                              ],  
+                                              ],
                                             ),
                                             const SizedBox(height: 4),
                                             Text(

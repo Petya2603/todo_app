@@ -1,5 +1,1 @@
-enum Tasktype {
-  note,
-  calendar,
-  contest,
-}
+// TODO Implement this library.

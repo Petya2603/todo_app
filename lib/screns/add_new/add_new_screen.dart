@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/tasktype.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/model/task.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:todo_app/screns/home/home_controller.dart';
 
 // ignore: camel_case_types
 class Add_new extends StatefulWidget {
@@ -20,10 +21,10 @@ class _Add_newState extends State<Add_new> {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  Tasktype taskType = Tasktype.note;
 
   @override
   Widget build(BuildContext context) {
+    Get.put(HomeScreenController.addNew());
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     return SafeArea(
