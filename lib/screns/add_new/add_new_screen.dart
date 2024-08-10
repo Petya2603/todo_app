@@ -5,17 +5,16 @@ import 'package:todo_app/model/task.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/screns/home/home_controller.dart';
 
-// ignore: camel_case_types
-class Add_new extends StatefulWidget {
-  const Add_new({super.key, required this.addNewTask});
+class Addnew extends StatefulWidget {
+  const Addnew({super.key, required this.addNewTask});
   final void Function(Task newTask) addNewTask;
   @override
-  State<Add_new> createState() => _Add_newState();
+  State<Addnew> createState() => AddNewScreen();
 }
 
-// ignore: camel_case_types
-class _Add_newState extends State<Add_new> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class AddNewScreen extends State<Addnew> {
+  final HomeScreenController homecontroller = Get.put(HomeScreenController());
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   DateFormat formatter = DateFormat('dd.MM');
   TextEditingController dateController = TextEditingController();
@@ -24,9 +23,6 @@ class _Add_newState extends State<Add_new> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeScreenController.addNew());
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -34,8 +30,8 @@ class _Add_newState extends State<Add_new> {
           child: Column(
             children: [
               Container(
-                width: deviceWidth,
-                height: deviceHeight / 9,
+                width: Get.height,
+                height: Get.height / 9,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/header2.jpg"),
@@ -46,7 +42,7 @@ class _Add_newState extends State<Add_new> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Get.back();
                       },
                       icon: const Icon(
                         Icons.close,
@@ -70,7 +66,7 @@ class _Add_newState extends State<Add_new> {
                 ),
               ),
               Form(
-                key: _formKey, // Formu geçerli hale getirmek için
+                key: formKey, 
                 child: Column(
                   children: [
                     Padding(
@@ -237,7 +233,7 @@ class _Add_newState extends State<Add_new> {
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (formKey.currentState!.validate()) {
                             // Form geçerliyse yeni bir görev oluşturun ve addNewTask'a geçirin
                             Task newTask = Task(
                               title: titleController.text,
@@ -245,7 +241,7 @@ class _Add_newState extends State<Add_new> {
                               time: timeController.text,
                               description: descriptionController.text,
                             );
-                            widget.addNewTask(newTask);
+                            homecontroller.addNewTask(newTask);
                             Navigator.of(context).pop();
                           }
                         },

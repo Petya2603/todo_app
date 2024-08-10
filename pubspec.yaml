@@ -40,6 +40,7 @@ dependencies:
   one_clock: ^2.0.1
   flutter_launcher_icons: ^0.13.1
   lottie: ^3.1.2
+  get: ^4.6.6
  
 dev_dependencies: 
   flutter_lints: ^4.0.0

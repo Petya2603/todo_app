@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:get/get.dart';
-import 'package:todo_app/model/task.dart'; // Yeni ekran için import
+import 'package:todo_app/model/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/screns/completed_task/completed_task_screen.dart';
 
 class HomeScreenController extends GetxController {
-  HomeScreenController.addTask();
-  HomeScreenController.addNew();
-  final RxList<Task> todo = <Task>[].obs;
+  RxList<Task> todo = <Task>[].obs;
+  final RxList<Task> todoList = <Task>[].obs;
   void addNewTask(Task newTask) async {
     todo.add(newTask);
-    saveTasks(); // Yeni görevi kaydet
+    saveTasks();
   }
 
   Future<void> saveTasks() async {
@@ -28,19 +28,17 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  void updateTask(Task task, int index) {
-    todo[index] = task;
+  void onChanged(Task task) {
+    task.isCompleted = !task.isCompleted;
+    final completedTask = todo.where((t) => t.isCompleted).toList();
+    if (completedTask.isNotEmpty || completedTask == true) {
+      Get.to(CompletedTasksScreen(completed: completedTask));
+    }
     saveTasks();
   }
 
-  void toggle(index, value) {
-    todo[index].isCompleted = value;
-    todo.refresh();
-    saveTasks();
-  }
-
-  void deleteTask(int index) {
-    todo.removeAt(index);
+  void deleteTask(Task task) {
+    todo.remove(task);
     saveTasks();
   }
 }

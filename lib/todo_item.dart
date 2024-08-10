@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/model/task.dart';
+import 'package:todo_app/screns/home/home_controller.dart';
 
 class Todoitem extends StatefulWidget {
   final Task task;
-  final Function(Task) onChanged;
-  final Function(bool) onCheckBoxChanged;
-  final Function() onDeleteItem;
-
-  const Todoitem({
-    super.key,
-    required this.task,
-    required this.onChanged,
-    required this.onCheckBoxChanged,
-    required this.onDeleteItem,
-  });
+  Todoitem({super.key, required this.task});
 
   @override
-  State<Todoitem> createState() => _TodoitemState();
+  State<Todoitem> createState() => TodoitemState();
 }
 
-class _TodoitemState extends State<Todoitem> {
+class TodoitemState extends State<Todoitem> {
+  final HomeScreenController homecontroller = Get.put(HomeScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,28 +25,19 @@ class _TodoitemState extends State<Todoitem> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        onTap: () {
-          setState(() {
-            widget.task.isCompleted = !widget.task.isCompleted;
-            widget.onCheckBoxChanged(widget.task.isCompleted);
-            widget.onChanged(widget.task);
-          });
-        },
-        leading: Checkbox(
-          activeColor: const Color.fromARGB(255, 100, 35, 186),
-          value: widget.task.isCompleted,
-          onChanged: (value) {
-            widget.onCheckBoxChanged(value!);
-            widget.onChanged(widget.task);
-          },
+        leading: Obx(
+          () => Checkbox(
+              activeColor: const Color.fromARGB(255, 100, 35, 186),
+              value: widget.task.isCompleted,
+              onChanged: (value) {
+                homecontroller.onChanged(widget.task);
+              }),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              // Yeni Satır widget'ı daha iyi düzenleme için
-              mainAxisAlignment: MainAxisAlignment
-                  .spaceBetween, // Öğeleri yatay olarak hizalayın
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.task.date,
@@ -62,8 +47,7 @@ class _TodoitemState extends State<Todoitem> {
                   ),
                 ),
                 Text(
-                  widget.task
-                      .time, // Görev modelinizde zamanın mevcut olduğunu varsayarak
+                  widget.task.time,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -84,7 +68,9 @@ class _TodoitemState extends State<Todoitem> {
         trailing: IconButton(
           iconSize: 24,
           icon: const Icon(Icons.delete),
-          onPressed: widget.onDeleteItem,
+          onPressed: () {
+            homecontroller.deleteTask(widget.task);
+          },
         ),
       ),
     );
