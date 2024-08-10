@@ -13,7 +13,6 @@ class Todoitem extends StatefulWidget {
 
 class TodoitemState extends State<Todoitem> {
   final HomeScreenController homecontroller = Get.put(HomeScreenController());
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,13 +24,14 @@ class TodoitemState extends State<Todoitem> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        leading: Obx(
-          () => Checkbox(
-              activeColor: const Color.fromARGB(255, 100, 35, 186),
-              value: widget.task.isCompleted,
-              onChanged: (value) {
-                homecontroller.onChanged(widget.task);
-              }),
+        leading: Checkbox(
+          activeColor: const Color.fromARGB(255, 100, 35, 186),
+          value: widget.task.isCompleted,
+          onChanged: (value) {
+            setState(() {
+              homecontroller.onChanged(widget.task);
+            });
+          },
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

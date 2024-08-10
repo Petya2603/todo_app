@@ -7,7 +7,8 @@ import 'package:todo_app/screns/completed_task/completed_task_screen.dart';
 
 class HomeScreenController extends GetxController {
   RxList<Task> todo = <Task>[].obs;
-  final RxList<Task> todoList = <Task>[].obs;
+  RxList<Task> todoList = <Task>[].obs;
+
   void addNewTask(Task newTask) async {
     todo.add(newTask);
     saveTasks();
@@ -30,7 +31,9 @@ class HomeScreenController extends GetxController {
 
   void onChanged(Task task) {
     task.isCompleted = !task.isCompleted;
+
     final completedTask = todo.where((t) => t.isCompleted).toList();
+    // ignore: unrelated_type_equality_checks
     if (completedTask.isNotEmpty || completedTask == true) {
       Get.to(CompletedTasksScreen(completed: completedTask));
     }

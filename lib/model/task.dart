@@ -1,28 +1,23 @@
 // ignore: unused_import
 import 'dart:convert';
 
-class Tasks{
-  
-}
+class Tasks {}
 
 class Task {
   Task({
     required this.time,
     required this.title,
     required this.description,
-    this.isCompleted = false, // Default değer olarak false
+    this.isCompleted = false,
     required this.date,
   });
 
   final String time;
   final String title;
   final String description;
-  bool isCompleted; // `isCompleted` değeri değiştirilebilir
+  bool isCompleted;
   final String date;
 
-
-
-  // `toJson` fonksiyonunu `Map<String, dynamic>` türünde döndürerek, JSON kodunu daha kolay çalıştırır hale getiriyoruz.
   Map<String, dynamic> toJson() {
     return {
       'time': time,
@@ -33,7 +28,6 @@ class Task {
     };
   }
 
-  // `fromJson` fonksiyonunu `Map<String, dynamic>` türünde veri alması için ayarlıyoruz.
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
       time: json['time'] as String,
@@ -43,8 +37,4 @@ class Task {
       date: json['date'] as String,
     );
   }
-
-  void onCheckBoxChanged(bool isCompleted) {}
-
-  // `fromMap` fonksiyonu gereksiz, `fromJson` fonksiyonu ile aynı görevi görüyor.
 }
