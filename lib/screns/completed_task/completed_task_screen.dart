@@ -3,15 +3,16 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:todo_app/model/task.dart';
+import 'package:todo_app/screns/home/home_controller.dart';
 
 class CompletedTasksScreen extends StatelessWidget {
-  final List<Task> completed;
+  final HomeScreenController homecontroller = Get.put(HomeScreenController());
 
   CompletedTasksScreen({
     super.key,
-    required this.completed,
   });
 
   @override
@@ -72,7 +73,7 @@ class CompletedTasksScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 60),
                           child: Visibility(
-                            visible: completed.isEmpty,
+                            visible: homecontroller.completedTask.isEmpty,
                             child: const Text(
                               'Your completed list is empty',
                               style: TextStyle(
@@ -89,7 +90,7 @@ class CompletedTasksScreen extends StatelessWidget {
                               child: ListView.builder(
                                 primary: false,
                                 shrinkWrap: true,
-                                itemCount: completed.length,
+                                itemCount: homecontroller.completedTask.length,
                                 itemBuilder: (context, index) {
                                   return Card(
                                     color: Colors.white,
@@ -107,14 +108,16 @@ class CompletedTasksScreen extends StatelessWidget {
                                                 .spaceBetween, // Öğeleri yatay olarak hizalayın
                                             children: [
                                               Text(
-                                                completed[index].date,
+                                                homecontroller
+                                                    .completedTask[index].date,
                                                 style: const TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.grey,
                                                 ),
                                               ),
                                               Text(
-                                                completed[index]
+                                                homecontroller
+                                                    .completedTask[index]
                                                     .time, // Görev modelinizde zamanın mevcut olduğunu varsayarak
                                                 style: const TextStyle(
                                                   fontSize: 14,
@@ -125,7 +128,8 @@ class CompletedTasksScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
-                                            completed[index].title,
+                                            homecontroller
+                                                .completedTask[index].title,
                                             style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.black,

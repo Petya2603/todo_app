@@ -69,7 +69,9 @@ class HomeScreenState extends State<HomeScreen> {
                           datetime: DateTime.now()),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(CompletedTasksScreen());
+                      },
                       icon: const Icon(
                         Icons.security_update_good_outlined,
                         size: 27,
@@ -115,7 +117,6 @@ class HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       return Todoitem(
                                         task: homecontroller.todo[index],
-                                        
                                       );
                                     },
                                   ),

@@ -28,9 +28,7 @@ class TodoitemState extends State<Todoitem> {
           activeColor: const Color.fromARGB(255, 100, 35, 186),
           value: widget.task.isCompleted,
           onChanged: (value) {
-            setState(() {
-              homecontroller.onChanged(widget.task);
-            });
+            homecontroller.onChanged(widget.task);
           },
         ),
         title: Column(
